@@ -64,11 +64,49 @@ export const Sidebar = ({ routes }: SidebarProps) => {
             </Flex>
           </Link>
         ))}
+
+        <Flex display={{ tablet: "none" }} w="full" flexDir="column">
+          <Link to="/entrar">
+            <Flex
+              cursor="pointer"
+              justifyContent="space-between"
+              borderRadius="4px"
+              bg="background.primary"
+              w="100%"
+              h="40px"
+              alignItems="center"
+              p="8px"
+              gap="8px"
+              color="text.primary"
+            >
+              <Flex w="24px" justify="center">
+                <SignOut color="#1D2E5C" size={24} />
+              </Flex>
+
+              <Text
+                display={{ mobile: "none", tablet: "block" }}
+                w="full"
+                fontWeight="500"
+                whiteSpace="nowrap"
+                color="text.secondary"
+              >
+                Sair
+              </Text>
+            </Flex>
+          </Link>
+        </Flex>
       </Flex>
 
       <Spacer />
 
-      <Flex w="full" flexDir="column" px="8px" mb="12px" gap="4px">
+      <Flex
+        display={{ mobile: "none", tablet: "flex" }}
+        w="full"
+        flexDir="column"
+        px="8px"
+        mb="12px"
+        gap="4px"
+      >
         <Link to="/entrar">
           <Flex
             cursor="pointer"

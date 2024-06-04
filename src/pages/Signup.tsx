@@ -1,6 +1,7 @@
 import { Button, Flex, Input } from "@chakra-ui/react";
 import { Title, Subtitle, Label } from "../components/Texts/Texts";
 import LayoutForm from "../layouts/LayoutForm";
+import { Link } from "react-router-dom";
 
 export const Signup = () => {
   return (
@@ -8,28 +9,36 @@ export const Signup = () => {
       <Flex flexDir="column" w={{ mobile: "100%", tablet: "650px" }} gap="16px">
         <Flex flexDir="column" gap="4px">
           <Title>Cadastro</Title>
-          <Subtitle>Welcome back! Please enter your details.</Subtitle>
+          <Subtitle>Preencha os campos abaixo para criar sua conta.</Subtitle>
         </Flex>
 
         <Flex flexDir="column" gap="12px">
           <Flex flexDir="column" gap="8px">
-            <Label>Email</Label>
-            <Input placeholder="Enter your email" />
+            <Label>Insira seu melhor email</Label>
+            <Input type="email" placeholder="Digite seu email" />
           </Flex>
 
           <Flex flexDir={{ mobile: "column", desktop: "row" }} gap="8px">
             <Flex flexDir="column" gap="8px" w="full">
-              <Label>Senha</Label>
-              <Input placeholder="••••••••" />
+              <Label>Insira uma senha forte</Label>
+              <Input type="password" placeholder="••••••••" />
             </Flex>
 
             <Flex flexDir="column" gap="8px" w="full">
-              <Label>Senha</Label>
-              <Input placeholder="••••••••" />
+              <Label>Confirme sua senha</Label>
+              <Input type="password" placeholder="••••••••" />
             </Flex>
           </Flex>
         </Flex>
-        <Button colorScheme="blue">Sign in</Button>
+        <Button colorScheme="blue">Cadastrar</Button>
+
+        <Flex textAlign="center">
+          <Link to="/entrar" style={{ width: "100%" }}>
+            <Button w="full" colorScheme="blue" variant="link">
+              Já tem uma conta? Faça login
+            </Button>
+          </Link>
+        </Flex>
       </Flex>
     </LayoutForm>
   );

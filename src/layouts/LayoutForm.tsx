@@ -19,7 +19,7 @@ export const LayoutForm = ({ children }: LayoutFormProps) => {
         direction="column"
         minH="full"
         justify="center"
-        pt="80px"
+        pt="10vh"
         gap="24px"
         px="12px"
         mx="auto"

@@ -9,6 +9,16 @@ export const Dashboard = () => {
       <Subtitle>Your current sales summary and activity.</Subtitle>
       <Box textAlign="center" fontSize="xl">
         <Button colorScheme="blue">teste</Button>
+        <Button colorScheme="blue" variant="outline">
+          teste
+        </Button>
+        <Button colorScheme="blue" variant="ghost">
+          teste
+        </Button>
+        <Button colorScheme="blue" variant="link">
+          teste
+        </Button>
+
         <Button colorScheme="gray">teste</Button>
 
         <Input placeholder="teste" />
