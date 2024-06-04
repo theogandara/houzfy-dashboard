@@ -18,7 +18,7 @@ export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
       bg="background.secondary"
     >
       <Flex direction="column">
-        <Flex minH="100vh">
+        <Flex minH="100dvh">
           <Sidebar routes={routes} />
           <Flex direction="column" w="100%" minH="full" flex="1" pt="12px">
             <Box pos="relative" h="full" flex="1" bg="background.secondary">
