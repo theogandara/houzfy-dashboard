@@ -20,4 +20,12 @@ const Subtitle = ({ children }: TextProps) => {
   );
 };
 
-export { Title, Subtitle };
+const Label = ({ children }: TextProps) => {
+  return (
+    <Text fontSize="14px" lineHeight="20px">
+      {children}
+    </Text>
+  );
+};
+
+export { Title, Subtitle, Label };
