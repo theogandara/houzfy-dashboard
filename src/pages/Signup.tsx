@@ -5,9 +5,9 @@ import LayoutForm from "../layouts/LayoutForm";
 export const Signup = () => {
   return (
     <LayoutForm>
-      <Flex flexDir="column" w={{ mobile: "100%", tablet: "450px" }} gap="24px">
+      <Flex flexDir="column" w={{ mobile: "100%", tablet: "650px" }} gap="16px">
         <Flex flexDir="column" gap="4px">
-          <Title>Signup</Title>
+          <Title>Cadastro</Title>
           <Subtitle>Welcome back! Please enter your details.</Subtitle>
         </Flex>
 
@@ -17,9 +17,16 @@ export const Signup = () => {
             <Input placeholder="Enter your email" />
           </Flex>
 
-          <Flex flexDir="column" gap="8px">
-            <Label>Senha</Label>
-            <Input placeholder="••••••••" />
+          <Flex flexDir={{ mobile: "column", desktop: "row" }} gap="8px">
+            <Flex flexDir="column" gap="8px" w="full">
+              <Label>Senha</Label>
+              <Input placeholder="••••••••" />
+            </Flex>
+
+            <Flex flexDir="column" gap="8px" w="full">
+              <Label>Senha</Label>
+              <Input placeholder="••••••••" />
+            </Flex>
           </Flex>
         </Flex>
         <Button colorScheme="blue">Sign in</Button>

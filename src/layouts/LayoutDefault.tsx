@@ -11,8 +11,8 @@ export type LayoutDefaultProps = {
 export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
   return (
     <Flex
-      minH="100vh"
-      maxH="100vh"
+      minH="100dvh"
+      maxH="100dvh"
       direction="column"
       overflow="hidden"
       bg="background.secondary"

@@ -5,6 +5,7 @@ import { CRM } from "../pages/CRM";
 import { Imoveis } from "../pages/Imoveis";
 import { NotFound } from "../pages/NotFound";
 import { Login } from "../pages/Login";
+import { Signup } from "../pages/Signup";
 
 const AppRoutes = () => {
   return (
@@ -12,8 +13,8 @@ const AppRoutes = () => {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Login />} />
+        <Route path="/entrar" element={<Login />} />
+        <Route path="/cadastro" element={<Signup />} />
         <Route path="/crm" element={<CRM />} />
         <Route path="/imoveis" element={<Imoveis />} />
       </Routes>

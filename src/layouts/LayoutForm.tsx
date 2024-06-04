@@ -9,8 +9,8 @@ export type LayoutFormProps = {
 export const LayoutForm = ({ children }: LayoutFormProps) => {
   return (
     <Flex
-      minH="100vh"
-      maxH="100vh"
+      minH="100dvh"
+      maxH="100dvh"
       direction="column"
       overflow="hidden"
       bg="background.secondary"

@@ -69,7 +69,7 @@ export const Sidebar = ({ routes }: SidebarProps) => {
       <Spacer />
 
       <Flex w="full" flexDir="column" px="8px" mb="12px" gap="4px">
-        <Link to="/login">
+        <Link to="/entrar">
           <Flex
             cursor="pointer"
             justifyContent="space-between"
