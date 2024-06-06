@@ -1,10 +1,10 @@
-import { Text } from "@chakra-ui/react";
+import { Text, TextProps } from "@chakra-ui/react";
 
-interface TextProps {
+interface TextCustomProps extends TextProps {
   children: React.ReactNode;
 }
 
-const Title = ({ children }: TextProps) => {
+const Title = ({ children }: TextCustomProps) => {
   return (
     <Text fontWeight="500" fontSize="30px" lineHeight="38px">
       {children}
@@ -12,15 +12,15 @@ const Title = ({ children }: TextProps) => {
   );
 };
 
-const Subtitle = ({ children }: TextProps) => {
+const Subtitle = ({ children, ...props }: TextCustomProps) => {
   return (
-    <Text fontSize="16px" lineHeight="24px">
+    <Text fontSize="16px" lineHeight="24px" {...props}>
       {children}
     </Text>
   );
 };
 
-const Label = ({ children }: TextProps) => {
+const Label = ({ children }: TextCustomProps) => {
   return (
     <Text fontSize="14px" lineHeight="20px">
       {children}

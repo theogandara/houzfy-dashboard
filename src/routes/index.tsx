@@ -6,6 +6,7 @@ import { Imoveis } from "../pages/Imoveis";
 import { NotFound } from "../pages/NotFound";
 import { Login } from "../pages/Login";
 import { Signup } from "../pages/Signup";
+import { HouseDetails } from "../pages/Details";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/cadastro" element={<Signup />} />
         <Route path="/crm" element={<CRM />} />
         <Route path="/imoveis" element={<Imoveis />} />
+        <Route path="/casa/detalhes" element={<HouseDetails />} />
       </Routes>
     </AnimatePresence>
   );
