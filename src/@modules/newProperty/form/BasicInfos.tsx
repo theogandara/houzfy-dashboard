@@ -1,8 +1,10 @@
 import { ErrorMessage, Label, Subtitle } from "../../../components/Texts/Texts";
-import { Flex, Input, Select, Textarea } from "@chakra-ui/react";
+import { Button, Flex, Input, Select, Textarea } from "@chakra-ui/react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight } from "@phosphor-icons/react";
+import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
   title: z.string().email({ message: "Título inválido" }),
@@ -13,6 +15,7 @@ const schema = z.object({
 });
 
 export const BasicInfos = () => {
+  const { setStep } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
@@ -83,6 +86,18 @@ export const BasicInfos = () => {
             {errors.type?.message && <>{errors.type?.message}</>}
           </ErrorMessage>
         </Flex>
+      </Flex>
+
+      <Flex mt="24px" gap="24px">
+        <Button
+          rightIcon={<ArrowRight color="white" size={24} />}
+          w="full"
+          gap="12px"
+          colorScheme="blue"
+          onClick={() => setStep(1)}
+        >
+          Próxima etapa
+        </Button>
       </Flex>
     </>
   );

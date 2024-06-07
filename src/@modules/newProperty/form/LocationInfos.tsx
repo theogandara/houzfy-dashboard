@@ -1,23 +1,27 @@
 import { ErrorMessage, Label, Subtitle } from "../../../components/Texts/Texts";
-import { Flex, Input, Select, Textarea } from "@chakra-ui/react";
+import { Button, Flex, Input } from "@chakra-ui/react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
-  title: z.string().email({ message: "Título inválido" }),
-  price: z.string().email({ message: "Preço inválido" }),
-  description: z.string().email({ message: "Descrição inválida" }),
-  action: z.string().email({ message: "Finalidade inválida" }),
-  type: z.string().email({ message: "Tipo inválido" }),
+  address: z.string().email({ message: "address inválido" }),
+  number: z.string().email({ message: "number inválido" }),
+  complement: z.string().email({ message: "complement inválido" }),
+  neighborhood: z.string().email({ message: "neighborhood inválido" }),
+  city: z.string().email({ message: "city inválido" }),
+  state: z.string().email({ message: "state inválido" }),
+  zipCode: z.string().email({ message: "zipCode inválido" }),
 });
 
 export const LocationInfos = () => {
+  const { setStep } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
@@ -98,6 +102,21 @@ export const LocationInfos = () => {
             </ErrorMessage>
           </Flex>
         </Flex>
+      </Flex>
+      <Flex mt="24px" gap="24px">
+        <Button onClick={() => setStep(0)} colorScheme="gray">
+          <ArrowLeft color="black" size={24} />
+        </Button>
+
+        <Button
+          rightIcon={<ArrowRight color="white" size={24} />}
+          w="full"
+          gap="12px"
+          colorScheme="blue"
+          onClick={() => setStep(2)}
+        >
+          Próxima etapa
+        </Button>
       </Flex>
     </>
   );

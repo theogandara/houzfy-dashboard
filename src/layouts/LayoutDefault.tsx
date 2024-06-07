@@ -26,7 +26,7 @@ export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
                 overflowY="auto"
                 w="100%"
                 minH="100%"
-                maxH="100%"
+                maxH="calc(100vh - 12px)"
                 maxW="100%"
                 p="30px"
                 bg="background.primary"
