@@ -17,36 +17,38 @@ export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
       overflow="hidden"
       bg="background.secondary"
     >
-      <Flex direction="column">
-        <Flex minH="100dvh">
-          <Sidebar routes={routes} />
-          <Flex direction="column" w="100%" minH="full" flex="1" pt="12px">
-            <Box pos="relative" h="full" flex="1" bg="background.secondary">
-              <Flex
-                overflowY="auto"
-                w="100%"
-                minH="100%"
-                maxH="calc(100vh - 12px)"
-                maxW="100%"
-                p="30px"
-                bg="background.primary"
-                direction="column"
-                borderTopLeftRadius="4px"
-                borderLeft="2px solid"
-                borderTop="2px solid"
-                borderColor="gray.100"
+      <Flex minH="100dvh">
+        <Sidebar routes={routes} />
+        <Flex direction="column" w="100%" minH="full" flex="1" pt="12px">
+          <Box
+            pos="relative"
+            h="full"
+            flex="1"
+            overflow="auto"
+            bg="background.primary"
+            borderTopLeftRadius="4px"
+            borderLeft="2px solid"
+            borderTop="2px solid"
+            borderColor="gray.100"
+          >
+            <Flex
+              overflowY="auto"
+              w="100%"
+              maxH="calc(100vh - 12px)"
+              maxW="100%"
+              p="30px"
+              direction="column"
+            >
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
               >
-                <motion.div
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {children}
-                </motion.div>
-              </Flex>
-            </Box>
-          </Flex>
+                {children}
+              </motion.div>
+            </Flex>
+          </Box>
         </Flex>
       </Flex>
     </Flex>
