@@ -1,12 +1,12 @@
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes } from "react-router-dom";
-import { Dashboard } from "../pages/Dashboard";
-import { CRM } from "../pages/CRM";
-import { Imoveis } from "../pages/Imoveis";
 import { NotFound } from "../pages/NotFound";
-import { Login } from "../pages/Login";
-import { Signup } from "../pages/Signup";
-import { HouseDetails } from "../pages/Details";
+import { HouseDetails } from "../@modules/propertyDetails/Details";
+import { Dashboard } from "../@modules/dashboard/Dashboard";
+import { Login } from "../@modules/login/Login";
+import { Signup } from "../@modules/signup/Signup";
+import { CRM } from "../@modules/CRM/CRM";
+import { NewProperty } from "../@modules/newProperty/NewProperty";
 
 const AppRoutes = () => {
   return (
@@ -17,7 +17,7 @@ const AppRoutes = () => {
         <Route path="/entrar" element={<Login />} />
         <Route path="/cadastro" element={<Signup />} />
         <Route path="/crm" element={<CRM />} />
-        <Route path="/imoveis" element={<Imoveis />} />
+        <Route path="/novo-imovel" element={<NewProperty />} />
         <Route path="/casa/detalhes" element={<HouseDetails />} />
       </Routes>
     </AnimatePresence>

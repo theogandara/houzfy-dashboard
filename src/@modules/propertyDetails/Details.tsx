@@ -1,7 +1,7 @@
 import { Box, Button, Input } from "@chakra-ui/react";
-import { Subtitle, Title } from "../components/Texts/Texts";
-import { useRedirect } from "../hooks/useRedirect";
-import LayoutHeader from "../layouts/LayoutHeader";
+import { Subtitle, Title } from "../../components/Texts/Texts";
+import { useRedirect } from "../../hooks/useRedirect";
+import LayoutHeader from "../../layouts/LayoutHeader";
 
 export const HouseDetails = () => {
   const { navigateTo } = useRedirect();

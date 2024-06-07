@@ -1,7 +1,7 @@
-import { Button, Flex, Input } from "@chakra-ui/react";
-import { Title, Subtitle, Label } from "../components/Texts/Texts";
-import LayoutForm from "../layouts/LayoutForm";
 import { Link } from "react-router-dom";
+import { Button, Flex, Input } from "@chakra-ui/react";
+import LayoutForm from "../../layouts/LayoutForm";
+import { Label, Subtitle, Title } from "../../components/Texts/Texts";
 
 export const Signup = () => {
   return (

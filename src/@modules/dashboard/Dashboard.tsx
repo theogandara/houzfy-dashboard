@@ -1,6 +1,6 @@
 import { Box, Button, Input } from "@chakra-ui/react";
-import { Subtitle, Title } from "../components/Texts/Texts";
-import LayoutDefault from "../layouts/LayoutDefault";
+import LayoutDefault from "../../layouts/LayoutDefault";
+import { Subtitle, Title } from "../../components/Texts/Texts";
 
 export const Dashboard = () => {
   return (

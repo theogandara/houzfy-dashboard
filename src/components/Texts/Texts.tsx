@@ -4,9 +4,9 @@ interface TextCustomProps extends TextProps {
   children: React.ReactNode;
 }
 
-const Title = ({ children }: TextCustomProps) => {
+const Title = ({ children, ...props }: TextCustomProps) => {
   return (
-    <Text fontWeight="500" fontSize="30px" lineHeight="38px">
+    <Text fontWeight="500" fontSize="30px" lineHeight="38px" {...props}>
       {children}
     </Text>
   );
@@ -20,12 +20,26 @@ const Subtitle = ({ children, ...props }: TextCustomProps) => {
   );
 };
 
-const Label = ({ children }: TextCustomProps) => {
+const Label = ({ children, ...props }: TextCustomProps) => {
   return (
-    <Text fontSize="14px" lineHeight="20px">
+    <Text fontSize="14px" lineHeight="20px" {...props}>
       {children}
     </Text>
   );
 };
 
-export { Title, Subtitle, Label };
+const ErrorMessage = ({ children, ...props }: TextCustomProps) => {
+  return (
+    <Text
+      fontSize="12px"
+      lineHeight="16px"
+      fontWeight="600"
+      color="error.primary"
+      {...props}
+    >
+      {children}
+    </Text>
+  );
+};
+
+export { Title, Subtitle, Label, ErrorMessage };

@@ -38,6 +38,9 @@ export const theme = extendTheme({
       "800": "#303036",
       "900": "#18181B",
     },
+    error: {
+      primary: "#FF0000",
+    },
     hover: {
       primary: "#395BC790",
       secondary: "#FDFDFE",

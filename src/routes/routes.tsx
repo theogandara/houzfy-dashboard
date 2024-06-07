@@ -19,7 +19,7 @@ export const routes = [
     icon: <House color="white" size={24} />,
   },
   {
-    path: "/cadastrar-imovel",
+    path: "/novo-imovel",
     name: "Cadastrar imóvel",
     icon: <ListPlus color="white" size={24} />,
   },
