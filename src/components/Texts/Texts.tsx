@@ -14,7 +14,13 @@ const Title = ({ children, ...props }: TextCustomProps) => {
 
 const Subtitle = ({ children, ...props }: TextCustomProps) => {
   return (
-    <Text fontSize="16px" lineHeight="24px" {...props}>
+    <Text
+      fontSize="16px"
+      fontWeight="500"
+      color="text.secondary"
+      lineHeight="24px"
+      {...props}
+    >
       {children}
     </Text>
   );

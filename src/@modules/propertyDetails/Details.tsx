@@ -7,17 +7,20 @@ export const HouseDetails = () => {
   const { navigateTo } = useRedirect();
   return (
     <LayoutHeader
-      title="Detalhes da casa"
+      title="Detalhes do imóvel"
       onClickNext={() => navigateTo("/")}
       onClickBack={() => navigateTo("/")}
     >
-      <Title>CRM</Title>
-      <Subtitle>Your current sales summary and activity.</Subtitle>
-      <Box textAlign="center" fontSize="xl">
-        <Button colorScheme="blue">teste</Button>
-        <Button colorScheme="gray">teste</Button>
-
-        <Input placeholder="teste" />
+      <Box>
+        <Title>Detalhes do imóvel</Title>
+        <Subtitle>Veja os detalhes do imóvel que você selecionou.</Subtitle>
+        <Box>
+          <Input placeholder="Nome" />
+          <Input placeholder="Endereço" />
+          <Input placeholder="Preço" />
+          <Input placeholder="Descrição" />
+          <Button>Salvar</Button>
+        </Box>
       </Box>
     </LayoutHeader>
   );

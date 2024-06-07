@@ -1,4 +1,3 @@
-import { Box, Button, Input } from "@chakra-ui/react";
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { Subtitle, Title } from "../../components/Texts/Texts";
 
@@ -7,22 +6,6 @@ export const Dashboard = () => {
     <LayoutDefault>
       <Title>Dashboard</Title>
       <Subtitle>Your current sales summary and activity.</Subtitle>
-      <Box textAlign="center" fontSize="xl">
-        <Button colorScheme="blue">teste</Button>
-        <Button colorScheme="blue" variant="outline">
-          teste
-        </Button>
-        <Button colorScheme="blue" variant="ghost">
-          teste
-        </Button>
-        <Button colorScheme="blue" variant="link">
-          teste
-        </Button>
-
-        <Button colorScheme="gray">teste</Button>
-
-        <Input placeholder="teste" />
-      </Box>
     </LayoutDefault>
   );
 };

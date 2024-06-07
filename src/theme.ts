@@ -51,7 +51,8 @@ export const theme = extendTheme({
     },
     text: {
       primary: "#FDFDFE",
-      secondary: "#1D2E5C",
+      secondary: "#787887",
+      black: "#0C111C",
     },
   },
 });

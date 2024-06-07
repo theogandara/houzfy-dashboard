@@ -1,12 +1,7 @@
 import { Button, Flex, Input } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import LayoutForm from "../../layouts/LayoutForm";
-import {
-  ErrorMessage,
-  Label,
-  Subtitle,
-  Title,
-} from "../../components/Texts/Texts";
+import { ErrorMessage, Label, Title } from "../../components/Texts/Texts";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -28,7 +23,8 @@ const schema = z.object({
       message: "A senha deve conter pelo menos um caractere especial",
     }),
 });
-export const Login = () => {
+
+export const ChangePassword = () => {
   const {
     register,
     handleSubmit,
@@ -54,8 +50,7 @@ export const Login = () => {
           gap="24px"
         >
           <Flex flexDir="column" gap="4px">
-            <Title>Entrar</Title>
-            <Subtitle>Olá, seja bem vindo de volta! Faça seu login.</Subtitle>
+            <Title>Trocar senha</Title>
           </Flex>
 
           <Flex flexDir="column" gap="12px">
@@ -82,7 +77,7 @@ export const Login = () => {
             </Flex>
           </Flex>
           <Button colorScheme="blue" type="submit">
-            Entrar
+            Alterar senha
           </Button>
 
           <Flex
@@ -91,15 +86,15 @@ export const Login = () => {
             textAlign="center"
             justifyContent="space-between"
           >
-            <Link to="/cadastro">
-              <Button colorScheme="blue" variant="link">
-                Faça seu cadastro
+            <Link to="/entrar">
+              <Button colorScheme="gray" variant="link">
+                Já tenho uma conta
               </Button>
             </Link>
 
-            <Link to="/trocar-senha">
+            <Link to="/cadastro">
               <Button colorScheme="gray" variant="link">
-                Esqueci minha senha
+                Quero criar uma conta
               </Button>
             </Link>
           </Flex>
