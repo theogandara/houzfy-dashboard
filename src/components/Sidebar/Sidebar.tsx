@@ -13,6 +13,10 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ routes }: SidebarProps) => {
+  const isSelect = (path: string) => {
+    return window.location.pathname === path;
+  };
+
   return (
     <Flex
       transitionDuration="0.3s"
@@ -43,10 +47,13 @@ export const Sidebar = ({ routes }: SidebarProps) => {
               p="8px"
               gap="8px"
               color="text.primary"
+              bg={
+                isSelect(route.path) ? "hover.primary" : "background.secondary"
+              }
               _hover={{
                 transitionDuration: "0.4s",
                 bg: "hover.primary",
-                color: "#FDFDFE",
+                color: "text.primary",
               }}
             >
               <Flex w="24px" justify="center">
