@@ -48,4 +48,12 @@ const ErrorMessage = ({ children, ...props }: TextCustomProps) => {
   );
 };
 
-export { Title, Subtitle, Label, ErrorMessage };
+const P = ({ children, ...props }: TextCustomProps) => {
+  return (
+    <Text fontSize="12px" lineHeight="16px" {...props}>
+      {children}
+    </Text>
+  );
+};
+
+export { Title, Subtitle, Label, ErrorMessage, P };

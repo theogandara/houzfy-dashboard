@@ -35,7 +35,7 @@ export const Sidebar = ({ routes }: SidebarProps) => {
 
       <Flex w="full" flexDir="column" px="8px" gap="4px">
         {routes.map((route, index) => (
-          <Link to={route.path}>
+          <Link to={route.path} key={Math.random()}>
             <Flex
               cursor="pointer"
               justifyContent="space-between"

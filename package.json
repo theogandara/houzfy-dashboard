@@ -2,6 +2,12 @@
   "name": "houzfy-dashboard",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "PORT=3003 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@chakra-ui/react": "^2.8.2",
@@ -16,6 +22,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
+    "axios": "^0.27.2",
     "framer-motion": "^6.2.9",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -27,12 +34,6 @@
     "web-vitals": "^2.1.4",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
