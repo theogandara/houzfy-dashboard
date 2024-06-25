@@ -8,6 +8,14 @@ interface Values {
     purpose: string;
     category: string;
   };
+  locationInfos: {
+    address: string;
+    number: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+    zipCode: string;
+  };
 }
 
 interface Store {
@@ -15,6 +23,8 @@ interface Store {
   setStep: (step: number) => void;
   basicInfos: Values["basicInfos"];
   setBasicInfos: (values: Values["basicInfos"]) => void;
+  locationInfos: Values["locationInfos"];
+  setLocationInfos: (values: Values["locationInfos"]) => void;
 }
 
 export const useNewPropertyStore = create<Store>()((set) => ({
@@ -28,4 +38,13 @@ export const useNewPropertyStore = create<Store>()((set) => ({
     category: "",
   },
   setBasicInfos: (values) => set({ basicInfos: values }),
+  locationInfos: {
+    address: "",
+    number: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  },
+  setLocationInfos: (values) => set({ locationInfos: values }),
 }));

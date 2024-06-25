@@ -12,11 +12,11 @@ const schema = z.object({
   bedrooms: z.string().email({ message: "bedrooms inválido" }),
   bathrooms: z.string().email({ message: "bathrooms inválido" }),
   suites: z.string().email({ message: "suites inválido" }),
-  garages: z.string().email({ message: "garages inválido" }),
+  parkingSpaces: z.string().email({ message: "parkingSpaces inválido" }),
   pool: z.string().email({ message: "pool inválido" }),
-  barbecue: z.string().email({ message: "barbecue inválido" }),
+  barbecueArea: z.string().email({ message: "barbecueArea inválido" }),
   gym: z.string().email({ message: "gym inválido" }),
-  concierge: z.string().email({ message: "concierge inválido" }),
+  security24h: z.string().email({ message: "security24h inválido" }),
   elevator: z.string().email({ message: "elevator inválido" }),
   furnished: z.string().email({ message: "furnished inválido" }),
   petsAllowed: z.string().email({ message: "petsAllowed inválido" }),
@@ -102,11 +102,13 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Quantidade de Vagas de Garagem</Label>
             <Input
-              {...register("garages")}
+              {...register("parkingSpaces")}
               placeholder="Insira a quantidade de vagas de garagem"
             />
             <ErrorMessage>
-              {errors.garages?.message && <>{errors.garages?.message}</>}
+              {errors.parkingSpaces?.message && (
+                <>{errors.parkingSpaces?.message}</>
+              )}
             </ErrorMessage>
           </Flex>
         </Flex>
@@ -117,7 +119,9 @@ export const DetailInfos = () => {
           </Flex>
 
           <Flex flexDir="column" gap="8px" w="full">
-            <Checkbox {...register("barbecue")}>Possui churrasqueira</Checkbox>
+            <Checkbox {...register("barbecueArea")}>
+              Possui churrasqueira
+            </Checkbox>
           </Flex>
         </Flex>
 
@@ -127,7 +131,9 @@ export const DetailInfos = () => {
           </Flex>
 
           <Flex flexDir="column" gap="8px" w="full">
-            <Checkbox {...register("concierge")}>Possui portaria 24h</Checkbox>
+            <Checkbox {...register("security24h")}>
+              Possui portaria 24h
+            </Checkbox>
           </Flex>
         </Flex>
 
