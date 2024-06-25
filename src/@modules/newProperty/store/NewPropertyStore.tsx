@@ -5,8 +5,8 @@ interface Values {
     title: string;
     price: number;
     description: string;
-    action: string;
-    type: string;
+    purpose: string;
+    category: string;
   };
 }
 
@@ -24,8 +24,8 @@ export const useNewPropertyStore = create<Store>()((set) => ({
     title: "",
     price: 0,
     description: "",
-    action: "",
-    type: "",
+    purpose: "",
+    category: "",
   },
   setBasicInfos: (values) => set({ basicInfos: values }),
 }));

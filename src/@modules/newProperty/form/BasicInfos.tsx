@@ -7,27 +7,41 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
-  title: z.string().email({ message: "Título inválido" }),
-  price: z.string().email({ message: "Preço inválido" }),
-  description: z.string().email({ message: "Descrição inválida" }),
-  action: z.string().email({ message: "Finalidade inválida" }),
-  type: z.string().email({ message: "Tipo inválido" }),
+  title: z.string().max(200, { message: "Título inválido" }),
+  price: z
+    .string({ message: "Preço inválido" })
+    .max(200, { message: "Preço inválido" }),
+  description: z.string().max(300, { message: "Descrição inválida" }),
+  purpose: z.enum(["sale", "rent"], { message: "Finalidade inválida" }),
+  category: z.enum(["apartment", "house", "commercial", "land"], {
+    message: "Categoria inválida",
+  }),
 });
 
 export const BasicInfos = () => {
-  const { setStep } = useNewPropertyStore();
+  const { setStep, setBasicInfos } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
   });
 
+  const onSubmit = (data: any) => {
+    setBasicInfos({
+      title: data.title,
+      price: Number(data.price),
+      description: data.description,
+      purpose: data.purpose,
+      category: data.category,
+    });
+    setStep(1);
+  };
+
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
       <Subtitle color="text.black">
         Insira as informações básicas do imóvel para continuar
       </Subtitle>
@@ -64,26 +78,25 @@ export const BasicInfos = () => {
       <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">
         <Flex flexDir="column" gap="8px" w="full">
           <Label>Finalidade</Label>
-          <Select {...register("action")} placeholder="Selecione a finalidade">
-            <option value="temporada">Temporada</option>
-            <option value="venda">Venda</option>
-            <option value="aluguel">Aluguel</option>
+          <Select {...register("purpose")} placeholder="Selecione a finalidade">
+            <option value="sale">Venda</option>
+            <option value="rent">Aluguel</option>
           </Select>
           <ErrorMessage>
-            {errors.action?.message && <>{errors.action?.message}</>}
+            {errors.purpose?.message && <>{errors.purpose?.message}</>}
           </ErrorMessage>
         </Flex>
 
         <Flex flexDir="column" gap="8px" w="full">
           <Label>Categoria</Label>
-          <Select {...register("type")} placeholder="Selecione a categoria">
-            <option value="apartamento">Apartamento</option>
-            <option value="casa">Casa</option>
-            <option value="comercial">Comercial</option>
-            <option value="terreno">Terreno</option>
+          <Select {...register("category")} placeholder="Selecione a categoria">
+            <option value="apartment">Apartamento</option>
+            <option value="house">Casa</option>
+            <option value="commercial">Comercial</option>
+            <option value="land">Terreno</option>
           </Select>
           <ErrorMessage>
-            {errors.type?.message && <>{errors.type?.message}</>}
+            {errors.category?.message && <>{errors.category?.message}</>}
           </ErrorMessage>
         </Flex>
       </Flex>
@@ -94,11 +107,11 @@ export const BasicInfos = () => {
           w="full"
           gap="12px"
           colorScheme="blue"
-          onClick={() => setStep(1)}
+          type="submit"
         >
           Próxima etapa
         </Button>
       </Flex>
-    </>
+    </form>
   );
 };
