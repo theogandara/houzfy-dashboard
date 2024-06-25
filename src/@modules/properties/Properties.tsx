@@ -11,10 +11,10 @@ export const Properties = () => {
       propertyId: "d96b35f7-bc09-42be-8de8-2d57da1dfb96",
       title:
         "Luxurious Beachfront Villa Luxurious Beachfront VillaLuxurious Beachfront VillaLuxurious Beachfront VillaLuxurious Beachfront VillaLuxurious Beachfront VillaLuxurious Beachfront Villa",
-      price: "1500000",
+      price: "1200",
       description:
         "Stunning villa with panoramic ocean views, featuring 5 bedrooms, private pool, and BBQ area.Stunning villa with panoramic ocean views, featuring 5 bedrooms, private pool, and BBQ area.Stunning villa with panoramic ocean views, featuring 5 bedrooms, private pool, and BBQ area.Stunning villa with panoramic ocean views, featuring 5 bedrooms, private pool, and BBQ area.Stunning villa with panoramic ocean views, featuring 5 bedrooms, private pool, and BBQ area.",
-      purpose: "sale",
+      purpose: "rent",
       category: "house",
       address: "Ocean Drive",
       number: "123",

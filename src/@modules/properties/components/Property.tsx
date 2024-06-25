@@ -28,7 +28,10 @@ export const Property = (props: {
     city: props.city,
     state: props.state,
     zipCode: props.zipCode,
-    price: serializeMoney(props.price),
+    price:
+      props.purpose === "rent"
+        ? `${serializeMoney(props.price)}/mês`
+        : serializeMoney(props.price),
     purpose: serializePurpose(props.purpose),
   };
 
@@ -64,7 +67,10 @@ export const Property = (props: {
           <Subtitle color="text.black">{formatedValues.title}</Subtitle>
           <Flex gap="8px">
             <Badge text={formatedValues.price} color="blue" />
-            <Badge text={formatedValues.purpose} color="yellow" />
+            <Badge
+              text={formatedValues.purpose}
+              color={props.purpose === "rent" ? "yellow" : "green"}
+            />
           </Flex>
           <P>{formatedValues.description}</P>
           <P color="text.black" fontWeight="500">
