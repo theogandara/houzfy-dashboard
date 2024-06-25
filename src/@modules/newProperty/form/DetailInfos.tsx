@@ -5,26 +5,27 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
+import { api } from "../../../api/axiosInstance";
+import { useRedirect } from "../../../hooks/useRedirect";
 
 const schema = z.object({
-  totalArea: z.string().email({ message: "totalArea inválido" }),
-  builtArea: z.string().email({ message: "builtArea inválido" }),
-  bedrooms: z.string().email({ message: "bedrooms inválido" }),
-  bathrooms: z.string().email({ message: "bathrooms inválido" }),
-  suites: z.string().email({ message: "suites inválido" }),
-  parkingSpaces: z.string().email({ message: "parkingSpaces inválido" }),
-  pool: z.string().email({ message: "pool inválido" }),
-  barbecueArea: z.string().email({ message: "barbecueArea inválido" }),
-  gym: z.string().email({ message: "gym inválido" }),
-  security24h: z.string().email({ message: "security24h inválido" }),
-  elevator: z.string().email({ message: "elevator inválido" }),
-  furnished: z.string().email({ message: "furnished inválido" }),
-  petsAllowed: z.string().email({ message: "petsAllowed inválido" }),
-  otherFeatures: z.string().email({ message: "otherFeatures inválido" }),
+  totalArea: z.string({ message: "Área total inválida" }),
+  builtArea: z.string({ message: "Área construída inválido" }),
+  bedrooms: z.string({ message: "Insira o número de quartos" }),
+  bathrooms: z.string({ message: "Insira o número de banheiros" }),
+  suites: z.string({ message: "Insira o número de suítes" }),
+  parkingSpaces: z.string({ message: "Insira o número de vagas" }),
 });
 
 export const DetailInfos = () => {
-  const { step, setStep } = useNewPropertyStore();
+  const {
+    setStep,
+    setDetailInfos,
+    basicInfos,
+    locationInfos,
+    detailInfos,
+    clear,
+  } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
@@ -33,11 +34,82 @@ export const DetailInfos = () => {
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
+    defaultValues: {
+      totalArea: detailInfos.totalArea || "",
+      builtArea: detailInfos.builtArea || "",
+      bedrooms: detailInfos.bedrooms || "",
+      bathrooms: detailInfos.bathrooms || "",
+      suites: detailInfos.suites || "",
+      parkingSpaces: detailInfos.parkingSpaces || "",
+      pool: detailInfos.pool,
+      gym: detailInfos.gym,
+      elevator: detailInfos.elevator,
+      petsAllowed: detailInfos.petsAllowed,
+      barbecueArea: detailInfos.barbecueArea,
+      security24h: detailInfos.security24h,
+      furnished: detailInfos.furnished,
+    },
   });
 
+  const onBack = () => {
+    setDetailInfos({
+      totalArea: watch("totalArea"),
+      builtArea: watch("builtArea"),
+      bedrooms: watch("bedrooms"),
+      bathrooms: watch("bathrooms"),
+      suites: watch("suites"),
+      parkingSpaces: watch("parkingSpaces"),
+      pool: watch("pool"),
+      gym: watch("gym"),
+      elevator: watch("elevator"),
+      petsAllowed: watch("petsAllowed"),
+      barbecueArea: watch("barbecueArea"),
+      security24h: watch("security24h"),
+      furnished: watch("furnished"),
+    });
+    setStep(1);
+  };
+
+  const { navigateTo } = useRedirect();
+
+  const onSubmit = (data: any) => {
+    setDetailInfos({
+      totalArea: data.totalArea,
+      builtArea: data.builtArea,
+      bedrooms: data.bedrooms,
+      bathrooms: data.bathrooms,
+      suites: data.suites,
+      parkingSpaces: data.parkingSpaces,
+      pool: watch("pool"),
+      gym: watch("gym"),
+      elevator: watch("elevator"),
+      petsAllowed: watch("petsAllowed"),
+      barbecueArea: watch("barbecueArea"),
+      security24h: watch("security24h"),
+      furnished: watch("furnished"),
+    });
+
+    try {
+      api.post("/new-property", {
+        ...basicInfos,
+        ...locationInfos,
+        ...detailInfos,
+      });
+
+      clear();
+      navigateTo("/imoveis");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      console.log("Property created");
+    }
+  };
+
   return (
-    <>
-      <Subtitle color="text.black">Detalhes do imóvel</Subtitle>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+      <Subtitle color="text.black" mb="16px">
+        Detalhes do imóvel
+      </Subtitle>
       <Flex flexDir="column" gap="12px">
         <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">
           <Flex flexDir="column" gap="8px" w="full">
@@ -155,20 +227,12 @@ export const DetailInfos = () => {
 
         <Flex flexDir="column" gap="8px" w="full">
           <Label>Outros</Label>
-          <Input
-            {...register("otherFeatures")}
-            placeholder="Insira outras características"
-          />
-          <ErrorMessage>
-            {errors.otherFeatures?.message && (
-              <>{errors.otherFeatures?.message}</>
-            )}
-          </ErrorMessage>
+          <Input placeholder="Insira outras características" />
         </Flex>
       </Flex>
 
       <Flex mt="24px" gap="24px">
-        <Button onClick={() => setStep(1)} colorScheme="gray">
+        <Button onClick={onBack} colorScheme="gray">
           <ArrowLeft color="black" size={24} />
         </Button>
 
@@ -177,11 +241,11 @@ export const DetailInfos = () => {
           w="full"
           gap="12px"
           colorScheme="blue"
-          onClick={() => setStep(3)}
+          type="submit"
         >
-          Próxima etapa
+          Finalizar
         </Button>
       </Flex>
-    </>
+    </form>
   );
 };

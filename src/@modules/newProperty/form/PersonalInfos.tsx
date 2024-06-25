@@ -19,7 +19,6 @@ export const PersonalInfos = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",

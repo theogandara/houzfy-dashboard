@@ -8,9 +8,7 @@ import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
   title: z.string().max(200, { message: "Título inválido" }),
-  price: z
-    .string({ message: "Preço inválido" })
-    .max(200, { message: "Preço inválido" }),
+  price: z.string({ message: "Preço inválido" }),
   description: z.string().max(300, { message: "Descrição inválida" }),
   purpose: z.enum(["sale", "rent"], { message: "Finalidade inválida" }),
   category: z.enum(["apartment", "house", "commercial", "land"], {
@@ -19,7 +17,7 @@ const schema = z.object({
 });
 
 export const BasicInfos = () => {
-  const { setStep, setBasicInfos } = useNewPropertyStore();
+  const { setStep, setBasicInfos, basicInfos } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
@@ -27,12 +25,19 @@ export const BasicInfos = () => {
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
+    defaultValues: {
+      title: basicInfos.title,
+      price: basicInfos.price,
+      description: basicInfos.description,
+      purpose: basicInfos.purpose,
+      category: basicInfos.category,
+    },
   });
 
   const onSubmit = (data: any) => {
     setBasicInfos({
       title: data.title,
-      price: Number(data.price),
+      price: data.price,
       description: data.description,
       purpose: data.purpose,
       category: data.category,
@@ -42,7 +47,7 @@ export const BasicInfos = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-      <Subtitle color="text.black">
+      <Subtitle color="text.black" mb="16px">
         Insira as informações básicas do imóvel para continuar
       </Subtitle>
       <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">

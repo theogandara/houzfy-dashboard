@@ -3,7 +3,6 @@ import { Subtitle, Title } from "../../components/Texts/Texts";
 import { BasicInfos } from "./form/BasicInfos";
 import { LocationInfos } from "./form/LocationInfos";
 import { DetailInfos } from "./form/DetailInfos";
-import { PersonalInfos } from "./form/PersonalInfos";
 import { useNewPropertyStore } from "./store/NewPropertyStore";
 import { Divider, Flex } from "@chakra-ui/react";
 
@@ -18,8 +17,6 @@ export const NewProperty = () => {
         return <LocationInfos />;
       case 2:
         return <DetailInfos />;
-      case 3:
-        return <PersonalInfos />;
       default:
         return <BasicInfos />;
     }

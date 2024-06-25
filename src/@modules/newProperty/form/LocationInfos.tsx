@@ -7,35 +7,76 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
-  address: z.string().email({ message: "address inválido" }),
-  number: z.string().email({ message: "number inválido" }),
-  complement: z.string().email({ message: "complement inválido" }),
-  neighborhood: z.string().email({ message: "neighborhood inválido" }),
-  city: z.string().email({ message: "city inválido" }),
-  state: z.string().email({ message: "state inválido" }),
-  zipCode: z.string().email({ message: "zipCode inválido" }),
+  address: z.string({ message: "Endereço é obrigatório" }),
+  number: z.union([
+    z.string().regex(/^\d+$/, { message: "Número deve conter apenas dígitos" }),
+    z
+      .number()
+      .nonnegative({ message: "Número deve ser um valor não negativo" }),
+  ]),
+  neighborhood: z.string({ message: "Bairro é obrigatório" }),
+  city: z.string({ message: "Cidade é obrigatória" }),
+  state: z.string().length(2, { message: "Estado deve ter 2 caracteres" }),
+  zipCode: z.string({ message: "CEP é obrigatório" }),
+  complement: z.string().optional(),
 });
 
 export const LocationInfos = () => {
-  const { setStep } = useNewPropertyStore();
+  const { setStep, setLocationInfos, locationInfos } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
+    defaultValues: {
+      address: locationInfos.address,
+      number: locationInfos.number,
+      neighborhood: locationInfos.neighborhood,
+      city: locationInfos.city,
+      state: locationInfos.state,
+      zipCode: locationInfos.zipCode,
+    },
   });
 
+  const onBack = () => {
+    setLocationInfos({
+      address: watch("address"),
+      number: watch("number"),
+      neighborhood: watch("neighborhood"),
+      city: watch("city"),
+      state: watch("state"),
+      zipCode: watch("zipCode"),
+    });
+    setStep(0);
+  };
+
+  const onSubmit = (data: any) => {
+    setLocationInfos({
+      address: data.address,
+      number: data.number,
+      neighborhood: data.neighborhood,
+      city: data.city,
+      state: data.state,
+      zipCode: data.zipCode,
+    });
+    setStep(2);
+  };
+
   return (
-    <>
-      <Subtitle color="text.black">
+    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+      <Subtitle color="text.black" mb="16px">
         Insira as informações de localização do imóvel
       </Subtitle>
       <Flex flexDir="column" gap="12px">
         <Flex flexDir="column" gap="8px" w="full">
           <Label>Endereço</Label>
-          <Input {...register("address")} placeholder="Insira o endereço" />
+          <Input
+            {...register("address")}
+            placeholder="Ex: Rua Josino Brisola"
+          />
           <ErrorMessage>
             {errors.address?.message && <>{errors.address?.message}</>}
           </ErrorMessage>
@@ -44,7 +85,7 @@ export const LocationInfos = () => {
         <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Número</Label>
-            <Input {...register("number")} placeholder="Insira o número" />
+            <Input {...register("number")} placeholder="Ex: 295" />
             <ErrorMessage>
               {errors.number?.message && <>{errors.number?.message}</>}
             </ErrorMessage>
@@ -52,13 +93,7 @@ export const LocationInfos = () => {
 
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Complemento</Label>
-            <Input
-              {...register("complement")}
-              placeholder="Insira o complemento"
-            />
-            <ErrorMessage>
-              {errors.complement?.message && <>{errors.complement?.message}</>}
-            </ErrorMessage>
+            <Input placeholder="Insira o complemento" />
           </Flex>
         </Flex>
 
@@ -67,7 +102,7 @@ export const LocationInfos = () => {
             <Label>Bairro</Label>
             <Input
               {...register("neighborhood")}
-              placeholder="Insira o bairro"
+              placeholder="Ex: Jardim América"
             />
             <ErrorMessage>
               {errors.neighborhood?.message && (
@@ -88,7 +123,7 @@ export const LocationInfos = () => {
         <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Estado</Label>
-            <Input {...register("state")} placeholder="Insira o estado" />
+            <Input {...register("state")} placeholder="Ex: SP" />
             <ErrorMessage>
               {errors.state?.message && <>{errors.state?.message}</>}
             </ErrorMessage>
@@ -104,7 +139,7 @@ export const LocationInfos = () => {
         </Flex>
       </Flex>
       <Flex mt="24px" gap="24px">
-        <Button onClick={() => setStep(0)} colorScheme="gray">
+        <Button onClick={onBack} colorScheme="gray">
           <ArrowLeft color="black" size={24} />
         </Button>
 
@@ -113,11 +148,11 @@ export const LocationInfos = () => {
           w="full"
           gap="12px"
           colorScheme="blue"
-          onClick={() => setStep(2)}
+          type="submit"
         >
           Próxima etapa
         </Button>
       </Flex>
-    </>
+    </form>
   );
 };
