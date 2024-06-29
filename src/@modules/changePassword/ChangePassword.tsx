@@ -9,19 +9,6 @@ import { useRedirect } from "../../hooks/useRedirect";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
-  password: z
-    .string()
-    .min(8, { message: "A senha deve ter pelo menos 8 caracteres" })
-    .regex(/[a-z]/, {
-      message: "A senha deve conter pelo menos uma letra minúscula",
-    })
-    .regex(/[A-Z]/, {
-      message: "A senha deve conter pelo menos uma letra maiúscula",
-    })
-    .regex(/[0-9]/, { message: "A senha deve conter pelo menos um número" })
-    .regex(/[\W_]/, {
-      message: "A senha deve conter pelo menos um caractere especial",
-    }),
 });
 
 export const ChangePassword = () => {
@@ -37,8 +24,7 @@ export const ChangePassword = () => {
   const { navigateTo } = useRedirect();
 
   const onSubmit = (values: any) => {
-    console.log(values);
-    navigateTo("/");
+    navigateTo("/entrar");
   };
 
   return (
@@ -60,19 +46,6 @@ export const ChangePassword = () => {
 
               <ErrorMessage>
                 {errors.email?.message && <>{errors.email?.message}</>}
-              </ErrorMessage>
-            </Flex>
-
-            <Flex flexDir="column" gap="8px">
-              <Label>Insira sua senha</Label>
-              <Input
-                {...register("password")}
-                type="password"
-                placeholder="••••••••"
-              />
-
-              <ErrorMessage>
-                {errors.password?.message && <>{errors.password?.message}</>}
               </ErrorMessage>
             </Flex>
           </Flex>
