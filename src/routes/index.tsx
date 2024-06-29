@@ -16,12 +16,12 @@ const AppRoutes = () => {
   return (
     <AnimatePresence exitBeforeEnter>
       <Routes>
-        {/* dashboard */}
-        <Route path="/" element={<Dashboard />} />
         {/* login - signup */}
         <Route path="/entrar" element={<Login />} />
         <Route path="/cadastro" element={<Signup />} />
         <Route path="/trocar-senha" element={<ChangePassword />} />
+        {/* dashboard */}
+        <Route path="/" element={<Dashboard />} />
         {/* crm */}
         <Route path="/crm" element={<CRM />} />
         {/* properties */}
