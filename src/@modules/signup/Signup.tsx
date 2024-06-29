@@ -10,10 +10,9 @@ import {
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useRedirect } from "../../hooks/useRedirect";
 import { api } from "../../api/axiosInstance";
-import { Loading } from "../../components/Loading/Loading";
+import { useLoadingStore } from "../../store/loading.store";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -72,13 +71,13 @@ export const Signup = () => {
 
   const cpf = watch("cpf") || "";
 
-  const [loading, setLoading] = useState(false);
+  const { setShow } = useLoadingStore();
 
   const { navigateTo } = useRedirect();
   const toast = useToast();
 
   const onSubmit = async (values: any) => {
-    setLoading(true);
+    setShow(true);
     try {
       await api.post("/signup", {
         name: values.name,
@@ -95,13 +94,12 @@ export const Signup = () => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setShow(false);
     }
   };
 
   return (
     <LayoutForm>
-      <Loading show={loading} />
       <form
         style={{ width: "100%", height: "100%" }}
         onSubmit={handleSubmit(onSubmit)}

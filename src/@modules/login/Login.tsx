@@ -12,8 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRedirect } from "../../hooks/useRedirect";
 import { api } from "../../api/axiosInstance";
-import { useState } from "react";
-import { Loading } from "../../components/Loading/Loading";
+import { useLoadingStore } from "../../store/loading.store";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -41,13 +40,12 @@ export const Login = () => {
     mode: "onBlur",
   });
 
-  const [loading, setLoading] = useState(false);
-
+  const { setShow } = useLoadingStore();
   const { navigateTo } = useRedirect();
   const toast = useToast();
 
   const onSubmit = async (values: any) => {
-    setLoading(true);
+    setShow(true);
     try {
       const res = await api.post("/login", {
         email: values.email,
@@ -63,13 +61,12 @@ export const Login = () => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setShow(false);
     }
   };
 
   return (
     <LayoutForm>
-      <Loading show={loading} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex
           flexDir="column"
