@@ -1,4 +1,4 @@
-import { Button, Flex, Input } from "@chakra-ui/react";
+import { Button, Flex, Input, useToast } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import LayoutForm from "../../layouts/LayoutForm";
 import {
@@ -11,6 +11,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRedirect } from "../../hooks/useRedirect";
+import { api } from "../../api/axiosInstance";
+import { useState } from "react";
+import { Loading } from "../../components/Loading/Loading";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -38,15 +41,35 @@ export const Login = () => {
     mode: "onBlur",
   });
 
-  const { navigateTo } = useRedirect();
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (values: any) => {
-    console.log(values);
-    navigateTo("/");
+  const { navigateTo } = useRedirect();
+  const toast = useToast();
+
+  const onSubmit = async (values: any) => {
+    setLoading(true);
+    try {
+      const res = await api.post("/login", {
+        email: values.email,
+        password: values.password,
+      });
+      localStorage.setItem("jwt", res.data.jwt);
+      navigateTo("/");
+    } catch (err) {
+      toast({
+        description: "Email ou senha inválidos",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <LayoutForm>
+      <Loading show={loading} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Flex
           flexDir="column"
@@ -81,6 +104,7 @@ export const Login = () => {
               </ErrorMessage>
             </Flex>
           </Flex>
+
           <Button colorScheme="blue" type="submit">
             Entrar
           </Button>
