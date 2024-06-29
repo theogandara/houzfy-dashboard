@@ -11,17 +11,11 @@ export const Loading = ({ show }: { show: boolean }) => {
       bottom="0"
       alignItems="center"
       justifyContent="center"
-      bg="gray.800"
+      bg="black"
       zIndex="100"
       opacity="0.8"
     >
-      <Spinner
-        emptyColor="gray.200"
-        thickness="5px"
-        speed="0.5s"
-        size="xl"
-        color="blue.500"
-      />
+      <Spinner thickness="5px" speed="0.5s" size="xl" color="blue.500" />
     </Flex>
   );
 };

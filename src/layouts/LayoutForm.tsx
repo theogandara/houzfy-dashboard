@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { LogoDefault } from "../components/Logos/Logos";
 
 export type LayoutFormProps = {
@@ -8,18 +8,12 @@ export type LayoutFormProps = {
 
 export const LayoutForm = ({ children }: LayoutFormProps) => {
   return (
-    <Flex
-      minH="100dvh"
-      maxH="100dvh"
-      direction="column"
-      overflow="hidden"
-      bg="background.secondary"
-    >
+    <Flex direction="column" bg="background.secondary">
       <Flex
         direction="column"
         minH="full"
         justify="center"
-        pt="10vh"
+        pt="30px"
         gap="24px"
         px="12px"
         mx="auto"
@@ -38,6 +32,7 @@ export const LayoutForm = ({ children }: LayoutFormProps) => {
         >
           {children}
         </Flex>
+        <Box minH="24px" />
       </Flex>
     </Flex>
   );
