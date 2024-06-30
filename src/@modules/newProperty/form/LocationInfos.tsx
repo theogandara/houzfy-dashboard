@@ -53,6 +53,8 @@ export const LocationInfos = () => {
     setStep(0);
   };
 
+  const cep = watch("zipCode") || "";
+
   const onSubmit = (data: any) => {
     setLocationInfos({
       address: data.address,
@@ -65,8 +67,16 @@ export const LocationInfos = () => {
     setStep(2);
   };
 
+  const maskCEP = (value: string) => {
+    return value.replace(/\D/g, "").replace(/^(\d{5})(\d{3})+?$/, "$1-$2");
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+    <form
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ width: "100%" }}
+    >
       <Subtitle color="text.black" mb="16px">
         Insira as informações de localização do imóvel
       </Subtitle>
@@ -92,7 +102,7 @@ export const LocationInfos = () => {
           </Flex>
 
           <Flex flexDir="column" gap="8px" w="full">
-            <Label>Complemento</Label>
+            <Label>Complemento (opcional)</Label>
             <Input placeholder="Insira o complemento" />
           </Flex>
         </Flex>
@@ -123,7 +133,7 @@ export const LocationInfos = () => {
         <Flex flexDir={{ mobile: "column", tablet: "row" }} gap="12px">
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Estado</Label>
-            <Input {...register("state")} placeholder="Ex: SP" />
+            <Input maxLength={2} {...register("state")} placeholder="Ex: SP" />
             <ErrorMessage>
               {errors.state?.message && <>{errors.state?.message}</>}
             </ErrorMessage>
@@ -131,7 +141,12 @@ export const LocationInfos = () => {
 
           <Flex flexDir="column" gap="8px" w="full">
             <Label>CEP</Label>
-            <Input {...register("zipCode")} placeholder="Insira o CEP" />
+            <Input
+              maxLength={9}
+              value={maskCEP(cep)}
+              {...register("zipCode")}
+              placeholder="Insira o CEP"
+            />
             <ErrorMessage>
               {errors.zipCode?.message && <>{errors.zipCode?.message}</>}
             </ErrorMessage>

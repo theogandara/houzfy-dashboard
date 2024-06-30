@@ -1,5 +1,5 @@
 import { ErrorMessage, Label, Subtitle } from "../../../components/Texts/Texts";
-import { Button, Checkbox, Flex, Input } from "@chakra-ui/react";
+import { Button, Checkbox, Flex, Input, useToast } from "@chakra-ui/react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
 import { api } from "../../../api/axiosInstance";
 import { useRedirect } from "../../../hooks/useRedirect";
+import { useLoadingStore } from "../../../store/loading.store";
 
 const schema = z.object({
   totalArea: z.string({ message: "Área total inválida" }),
@@ -71,15 +72,18 @@ export const DetailInfos = () => {
   };
 
   const { navigateTo } = useRedirect();
+  const toast = useToast();
+  const { setShow } = useLoadingStore();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    setShow(true);
     setDetailInfos({
-      totalArea: data.totalArea,
-      builtArea: data.builtArea,
-      bedrooms: data.bedrooms,
-      bathrooms: data.bathrooms,
-      suites: data.suites,
-      parkingSpaces: data.parkingSpaces,
+      totalArea: data.totalArea || 0,
+      builtArea: data.builtArea || 0,
+      bedrooms: data.bedrooms || 0,
+      bathrooms: data.bathrooms || 0,
+      suites: data.suites || 0,
+      parkingSpaces: data.parkingSpaces || 0,
       pool: watch("pool"),
       gym: watch("gym"),
       elevator: watch("elevator"),
@@ -90,23 +94,43 @@ export const DetailInfos = () => {
     });
 
     try {
-      api.post("/new-property", {
+      const res = await api.post("/new-property", {
         ...basicInfos,
         ...locationInfos,
         ...detailInfos,
       });
 
-      clear();
-      navigateTo("/imoveis");
+      if (res.data.propertyId) {
+        clear();
+        toast({
+          description: "Imóvel criado com sucesso",
+          status: "success",
+          duration: 1500,
+          isClosable: true,
+        });
+      }
+
+      setTimeout(() => {
+        navigateTo("/imoveis");
+      }, 1000);
     } catch (err) {
-      console.error(err);
+      toast({
+        description: "Erro ao criar imóvel",
+        status: "error",
+        duration: 1500,
+        isClosable: true,
+      });
     } finally {
-      console.log("Property created");
+      setShow(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+    <form
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ width: "100%" }}
+    >
       <Subtitle color="text.black" mb="16px">
         Detalhes do imóvel
       </Subtitle>
@@ -115,6 +139,7 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Área Total (m²)</Label>
             <Input
+              value={watch("totalArea").replace(/\D/g, "")}
               {...register("totalArea")}
               placeholder="Insira a área total"
             />
@@ -126,6 +151,7 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Área Construída (m²)</Label>
             <Input
+              value={watch("builtArea").replace(/\D/g, "")}
               {...register("builtArea")}
               placeholder="Insira a área construída"
             />
@@ -139,6 +165,8 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Quantidade de Quartos</Label>
             <Input
+              maxLength={2}
+              value={watch("bedrooms").replace(/\D/g, "")}
               {...register("bedrooms")}
               placeholder="Insira a quantidade de quartos"
             />
@@ -150,6 +178,8 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Quantidade de Banheiros</Label>
             <Input
+              maxLength={2}
+              value={watch("bathrooms").replace(/\D/g, "")}
               {...register("bathrooms")}
               placeholder="Insira a quantidade de banheiros"
             />
@@ -163,6 +193,8 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Quantidade de Suítes</Label>
             <Input
+              maxLength={2}
+              value={watch("suites").replace(/\D/g, "")}
               {...register("suites")}
               placeholder="Insira a quantidade de suítes"
             />
@@ -174,6 +206,8 @@ export const DetailInfos = () => {
           <Flex flexDir="column" gap="8px" w="full">
             <Label>Quantidade de Vagas de Garagem</Label>
             <Input
+              maxLength={2}
+              value={watch("parkingSpaces").replace(/\D/g, "")}
               {...register("parkingSpaces")}
               placeholder="Insira a quantidade de vagas de garagem"
             />

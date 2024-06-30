@@ -1,5 +1,13 @@
 import { ErrorMessage, Label, Subtitle } from "../../../components/Texts/Texts";
-import { Button, Flex, Input, Select, Textarea } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Select,
+  Textarea,
+} from "@chakra-ui/react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +30,7 @@ export const BasicInfos = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
     mode: "onBlur",
@@ -33,6 +42,18 @@ export const BasicInfos = () => {
       category: basicInfos.category,
     },
   });
+
+  function CurrencyFormat(value: number | string) {
+    if (isNaN(Number(value))) return "R$ 0,00";
+
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(Number(value));
+  }
+
+  const price = watch("price") || "";
+  const formattedPrice = CurrencyFormat(price);
 
   const onSubmit = (data: any) => {
     setBasicInfos({
@@ -46,7 +67,11 @@ export const BasicInfos = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+    <form
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ width: "100%" }}
+    >
       <Subtitle color="text.black" mb="16px">
         Insira as informações básicas do imóvel para continuar
       </Subtitle>
@@ -61,7 +86,19 @@ export const BasicInfos = () => {
 
         <Flex flexDir="column" gap="8px" w="full">
           <Label>Preço</Label>
-          <Input {...register("price")} placeholder="Insira o preço" />
+          <InputGroup>
+            <InputLeftElement pointerEvents="none" color="gray.300">
+              R$
+            </InputLeftElement>
+            <Input
+              value={price.replace(/\D/g, "")}
+              {...register("price")}
+              placeholder="Insira o preço"
+            />
+          </InputGroup>
+          <Label fontSize="12px" lineHeight="14px">
+            {formattedPrice}
+          </Label>
           <ErrorMessage>
             {errors.price?.message && <>{errors.price?.message}</>}
           </ErrorMessage>
