@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 5000,
   headers: {
     authorization: `Bearer ${localStorage.getItem("jwt")}`,
