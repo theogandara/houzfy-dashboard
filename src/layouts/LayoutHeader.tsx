@@ -2,21 +2,21 @@ import { ReactNode } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Subtitle } from "../components/Texts/Texts";
-import { ArrowRight, X } from "@phosphor-icons/react";
+import { ArrowLeft, X } from "@phosphor-icons/react";
 import { ButtonIcon } from "../components/Button/ButtonIcon";
 
 export type LayoutHeaderProps = {
   children: ReactNode;
   title: string;
+  onClickClose?: () => void;
   onClickBack?: () => void;
-  onClickNext?: () => void;
 };
 
 export const LayoutHeader = ({
   children,
   title,
+  onClickClose,
   onClickBack,
-  onClickNext,
 }: LayoutHeaderProps) => {
   return (
     <Flex
@@ -39,7 +39,7 @@ export const LayoutHeader = ({
                 {onClickBack && (
                   <ButtonIcon
                     onClick={onClickBack}
-                    icon={<X color="white" weight="bold" size={24} />}
+                    icon={<ArrowLeft color="white" size={24} />}
                   />
                 )}
               </Flex>
@@ -47,10 +47,10 @@ export const LayoutHeader = ({
                 {title}
               </Subtitle>
               <Flex>
-                {onClickNext && (
+                {onClickClose && (
                   <ButtonIcon
-                    onClick={onClickNext}
-                    icon={<ArrowRight color="white" size={24} />}
+                    onClick={onClickClose}
+                    icon={<X color="white" weight="bold" size={24} />}
                   />
                 )}
               </Flex>

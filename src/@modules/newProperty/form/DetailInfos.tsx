@@ -97,7 +97,21 @@ export const DetailInfos = () => {
       const res = await api.post("/new-property", {
         ...basicInfos,
         ...locationInfos,
-        ...detailInfos,
+        ...{
+          totalArea: data.totalArea,
+          builtArea: data.builtArea,
+          bedrooms: data.bedrooms,
+          bathrooms: data.bathrooms,
+          suites: data.suites,
+          parkingSpaces: data.parkingSpaces,
+          pool: data.pool || false,
+          gym: data.gym || false,
+          elevator: data.elevator || false,
+          petsAllowed: data.petsAllowed || false,
+          barbecueArea: data.barbecueArea || false,
+          security24h: data.security24h || false,
+          furnished: data.furnished || false,
+        },
       });
 
       if (res.data.propertyId) {

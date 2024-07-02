@@ -27,7 +27,7 @@ const AppRoutes = () => {
         {/* properties */}
         <Route path="/novo-imovel" element={<NewProperty />} />
         <Route path="/imoveis" element={<Properties />} />
-        <Route path="/imoveis/detalhes" element={<HouseDetails />} />
+        <Route path="/imoveis/detalhes/:id" element={<HouseDetails />} />
         {/* suport */}
         <Route path="/suporte" element={<Suport />} />
         {/* documents */}
