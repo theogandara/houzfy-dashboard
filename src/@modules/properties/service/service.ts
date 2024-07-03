@@ -5,7 +5,7 @@ export const propertiesService = {
     return await api.get("/properties");
   },
   async getProperty(id: string) {
-    return {};
+    return await api.get(`property?propertyId=${id}`);
   },
   async createProperty(property: any) {
     return {};
@@ -14,6 +14,6 @@ export const propertiesService = {
     return {};
   },
   async deleteProperty(id: string) {
-    return {};
+    return api.delete(`/property?propertyId=${id}`);
   },
 };
