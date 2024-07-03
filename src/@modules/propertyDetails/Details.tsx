@@ -5,7 +5,9 @@ import LayoutHeader from "../../layouts/LayoutHeader";
 import { Trash } from "@phosphor-icons/react";
 import { useParams } from "react-router-dom";
 import { propertiesService } from "../properties/service/service";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { ErrorPage } from "../../components/Feedback/ErrorPage";
+import { Property } from "../properties/components/Property";
 
 export const HouseDetails = () => {
   const { navigateTo } = useRedirect();
@@ -33,12 +35,47 @@ export const HouseDetails = () => {
     },
   });
 
+  const { isLoading, error, data } = useQuery(["property", id], () =>
+    propertiesService.getProperty(id || "")
+  );
+
+  const propertyDefault = {
+    id: "",
+    title: "",
+    description: "",
+    address: "",
+    number: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    price: "",
+    purpose: "sale",
+  };
+
+  const property = data?.data.property || propertyDefault;
+
+  if (error) return <ErrorPage />;
+
   return (
     <LayoutHeader
       title="Detalhes do imóvel"
       onClickBack={() => navigateTo("/imoveis")}
     >
       <Box>
+        <Property
+          propertyId={property?.id}
+          title={property?.title}
+          description={property?.description}
+          address={property?.address}
+          number={property?.number}
+          neighborhood={property?.neighborhood}
+          city={property?.city}
+          state={property?.state}
+          zipCode={property?.zipCode}
+          price={property?.price}
+          purpose={property?.purpose}
+        />
         <Title>Detalhes do imóvel</Title>
         <Subtitle>Veja os detalhes do imóvel que você selecionou.</Subtitle>
         <Box>
