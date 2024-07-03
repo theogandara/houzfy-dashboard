@@ -1,30 +1,18 @@
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { Subtitle, Title } from "../../components/Texts/Texts";
 import { propertiesService } from "./service/service";
-import { useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Skeleton, Stack } from "@chakra-ui/react";
 import { Property } from "./components/Property";
-import { useLoadingStore } from "../../store/loading.store";
-import { usePropertiesStore } from "./store/properties.store";
+import { useQuery } from "react-query";
+import { ErrorPage } from "../../components/Feedback/ErrorPage";
 
 export const Properties = () => {
-  const { properties, setProperties } = usePropertiesStore();
-  const { setShow } = useLoadingStore();
+  const { isLoading, error, data } = useQuery("properties", () =>
+    propertiesService.getProperties()
+  );
+  const properties = data?.data.properties;
 
-  const getProperties = async () => {
-    setShow(true);
-    try {
-      const res = await propertiesService.getProperties();
-      setProperties(res.data.properties);
-    } catch (e) {
-    } finally {
-      setShow(false);
-    }
-  };
-
-  useEffect(() => {
-    getProperties();
-  }, []);
+  if (error) return <ErrorPage />;
 
   return (
     <LayoutDefault>
@@ -38,6 +26,20 @@ export const Properties = () => {
           return <Property key={Math.random()} {...property} />;
         })}
       </Flex>
+
+      {isLoading && (
+        <Stack mt="32px" gap="24px">
+          {Array(3)
+            .fill(0)
+            .map((_, index) => (
+              <Skeleton
+                key={index}
+                startColor="#eeeef0"
+                height={{ mobile: "330px", tablet: "180px" }}
+              />
+            ))}
+        </Stack>
+      )}
     </LayoutDefault>
   );
 };
