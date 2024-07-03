@@ -1,28 +1,15 @@
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { P, Subtitle, Title } from "../../components/Texts/Texts";
 import { Flex, Text } from "@chakra-ui/react";
-import { useLoadingStore } from "../../store/loading.store";
-import { useEffect } from "react";
+import { useQuery } from "react-query";
+import { ErrorPage } from "../../components/Feedback/ErrorPage";
 
 export const Dashboard = () => {
-  const { setShow } = useLoadingStore();
+  const { isLoading, error, data } = useQuery("dashboard", () =>
+    console.log("fetch data here")
+  );
 
-  const fetchDashboardData = async () => {
-    setShow(true);
-    try {
-      // Fetch data here
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setShow(false);
-      }, 1000);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  if (error) return <ErrorPage />;
 
   return (
     <LayoutDefault>
