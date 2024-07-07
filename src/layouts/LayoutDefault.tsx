@@ -35,7 +35,10 @@ export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
               overflowY="auto"
               w="100%"
               maxH="calc(100vh - 12px)"
-              maxW="100%"
+              maxW={{
+                mobile: "calc(100vw - 60px)",
+                tablet: "calc(100vw - 210px)",
+              }}
               p="30px"
               direction="column"
             >
@@ -45,7 +48,7 @@ export const LayoutDefault = ({ children }: LayoutDefaultProps) => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {children}
+                <Flex flexDir="column">{children}</Flex>
               </motion.div>
             </Flex>
           </Box>
