@@ -10,7 +10,7 @@ import { ErrorPage } from "../../components/Feedback/ErrorPage";
 import { Property } from "../properties/components/Property";
 
 export const HouseDetails = () => {
-  const { navigateTo } = useRedirect();
+  const { navigateTo, goBack } = useRedirect();
   const { id } = useParams();
   const toast = useToast();
 
@@ -58,10 +58,7 @@ export const HouseDetails = () => {
   if (error) return <ErrorPage />;
 
   return (
-    <LayoutHeader
-      title="Detalhes do imóvel"
-      onClickBack={() => navigateTo("/imoveis")}
-    >
+    <LayoutHeader title="Detalhes do imóvel" onClickBack={goBack}>
       <Box>
         <Property
           propertyId={property?.id}
