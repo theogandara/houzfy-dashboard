@@ -21,6 +21,7 @@ export const Sidebar = ({ routes }: SidebarProps) => {
     <Flex
       transitionDuration="0.3s"
       w={{ mobile: "60px", tablet: "210px" }}
+      minW={{ mobile: "60px", tablet: "210px" }}
       pt="24px"
       flexDir="column"
       gap="24px"
