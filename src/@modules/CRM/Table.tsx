@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { leadsService } from "./service/service";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { LoadingContent } from "../../components/Feedback/LoadingContent";
 
 type Lead = {
   leadId: string;
@@ -121,8 +122,7 @@ export const Table = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (isLoading) return <Subtitle>Loading...</Subtitle>;
-
+  if (isLoading) return <LoadingContent />;
   if (!data.length) return <Subtitle>Nenhum dado encontrado</Subtitle>;
 
   return (
