@@ -1,10 +1,11 @@
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { Subtitle, Title } from "../../components/Texts/Texts";
 import { propertiesService } from "./service/service";
-import { Flex, Skeleton, Stack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Property } from "./components/Property";
 import { useQuery } from "react-query";
 import { ErrorPage } from "../../components/Feedback/ErrorPage";
+import { LoadingContent } from "../../components/Feedback/LoadingContent";
 
 export const Properties = () => {
   const { isLoading, error, data } = useQuery("properties", () =>
@@ -13,6 +14,13 @@ export const Properties = () => {
   const properties = data?.data.properties;
 
   if (error) return <ErrorPage />;
+
+  if (isLoading)
+    return (
+      <LayoutDefault>
+        <LoadingContent />
+      </LayoutDefault>
+    );
 
   return (
     <LayoutDefault>
@@ -26,20 +34,6 @@ export const Properties = () => {
           return <Property key={Math.random()} {...property} />;
         })}
       </Flex>
-
-      {isLoading && (
-        <Stack mt="32px" gap="24px">
-          {Array(3)
-            .fill(0)
-            .map((_, index) => (
-              <Skeleton
-                key={index}
-                startColor="#eeeef0"
-                height={{ mobile: "330px", tablet: "180px" }}
-              />
-            ))}
-        </Stack>
-      )}
     </LayoutDefault>
   );
 };
