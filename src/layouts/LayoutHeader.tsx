@@ -55,13 +55,16 @@ export const LayoutHeader = ({
                 )}
               </Flex>
             </Flex>
-            <Box pos="relative" h="full" flex="1" bg="background.secondary">
+            <Box
+              pos="relative"
+              h="full"
+              flex="1"
+              bg="background.secondary"
+              overflow="auto"
+            >
               <Flex
-                overflowY="auto"
                 w="100%"
-                minH="100%"
-                maxH="100%"
-                maxW="100%"
+                h="calc(100vh - 64px)"
                 p="30px"
                 bg="background.primary"
                 direction="column"
@@ -69,6 +72,7 @@ export const LayoutHeader = ({
                 borderTopRightRadius="4px"
                 borderTop="2px solid"
                 borderColor="gray.100"
+                overflow="auto"
               >
                 <motion.div
                   initial={{ opacity: 0, x: 10 }}
