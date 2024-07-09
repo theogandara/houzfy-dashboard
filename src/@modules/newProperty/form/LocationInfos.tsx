@@ -7,17 +7,25 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
-  address: z.string({ message: "Endereço é obrigatório" }),
+  address: z.string({ message: "Endereço é obrigatório" }).min(5, {
+    message: "Endereço é obrigatório",
+  }),
   number: z.union([
     z.string().regex(/^\d+$/, { message: "Número deve conter apenas dígitos" }),
     z
       .number()
       .nonnegative({ message: "Número deve ser um valor não negativo" }),
   ]),
-  neighborhood: z.string({ message: "Bairro é obrigatório" }),
-  city: z.string({ message: "Cidade é obrigatória" }),
+  neighborhood: z.string({ message: "Bairro é obrigatório" }).min(5, {
+    message: "Bairro é obrigatório",
+  }),
+  city: z.string({ message: "Cidade é obrigatória" }).min(3, {
+    message: "Cidade é obrigatória",
+  }),
   state: z.string().length(2, { message: "Estado deve ter 2 caracteres" }),
-  zipCode: z.string({ message: "CEP é obrigatório" }),
+  zipCode: z.string({ message: "CEP é obrigatório" }).min(8, {
+    message: "CEP é obrigatório",
+  }),
   complement: z.string().optional(),
 });
 

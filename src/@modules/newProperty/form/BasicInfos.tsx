@@ -15,9 +15,16 @@ import { ArrowRight } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
 
 const schema = z.object({
-  title: z.string().max(200, { message: "Título inválido" }),
-  price: z.string({ message: "Preço inválido" }),
-  description: z.string().max(300, { message: "Descrição inválida" }),
+  title: z
+    .string()
+    .max(200, { message: "Título inválido" })
+    .min(5, { message: "Título inválido" }),
+  price: z.string({ message: "Preço inválido" }).min(1, {
+    message: "Preço inválido",
+  }),
+  description: z.string().max(300, { message: "Descrição inválida" }).min(5, {
+    message: "Descrição inválida",
+  }),
   purpose: z.enum(["sale", "rent"], { message: "Finalidade inválida" }),
   category: z.enum(["apartment", "house", "commercial", "land"], {
     message: "Categoria inválida",

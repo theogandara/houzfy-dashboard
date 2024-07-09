@@ -10,10 +10,18 @@ import { useRedirect } from "../../../hooks/useRedirect";
 import { useLoadingStore } from "../../../store/loading.store";
 
 const schema = z.object({
-  totalArea: z.string({ message: "Área total inválida" }),
-  builtArea: z.string({ message: "Área construída inválido" }),
-  bedrooms: z.string({ message: "Insira o número de quartos" }),
-  bathrooms: z.string({ message: "Insira o número de banheiros" }),
+  totalArea: z.string({ message: "Área total inválida" }).min(1, {
+    message: "Área total inválida",
+  }),
+  builtArea: z.string({ message: "Área construída inválido" }).min(1, {
+    message: "Área construída inválida",
+  }),
+  bedrooms: z.string({ message: "Insira o número de quartos" }).min(1, {
+    message: "Insira o número de quartos",
+  }),
+  bathrooms: z.string({ message: "Insira o número de banheiros" }).min(1, {
+    message: "Insira o número de banheiros",
+  }),
   suites: z.string({ message: "Insira o número de suítes" }),
   parkingSpaces: z.string({ message: "Insira o número de vagas" }),
 });
@@ -98,12 +106,12 @@ export const DetailInfos = () => {
         ...basicInfos,
         ...locationInfos,
         ...{
-          totalArea: data.totalArea,
-          builtArea: data.builtArea,
-          bedrooms: data.bedrooms,
-          bathrooms: data.bathrooms,
-          suites: data.suites,
-          parkingSpaces: data.parkingSpaces,
+          totalArea: data.totalArea || 0,
+          builtArea: data.builtArea || 0,
+          bedrooms: data.bedrooms || 0,
+          bathrooms: data.bathrooms || 0,
+          suites: data.suites || 0,
+          parkingSpaces: data.parkingSpaces || 0,
           pool: data.pool || false,
           gym: data.gym || false,
           elevator: data.elevator || false,
