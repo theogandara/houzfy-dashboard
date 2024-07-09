@@ -1,7 +1,7 @@
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { Subtitle, Title } from "../../components/Texts/Texts";
-import { Flex, Grid } from "@chakra-ui/react";
-import { FilePdf } from "@phosphor-icons/react";
+import { Button, Flex, Grid } from "@chakra-ui/react";
+import { FilePdf, Plus } from "@phosphor-icons/react";
 
 const documentsMock = [
   {
@@ -23,6 +23,17 @@ export const Documents = () => {
         <Flex flexDir="column" gap="4px">
           <Title>Documentos</Title>
           <Subtitle>Your current sales summary and activity.</Subtitle>
+        </Flex>
+
+        <Flex align="center" w="full">
+          <Button
+            w={{ mobile: "100%", tablet: "230px" }}
+            gap="8px"
+            colorScheme="blue"
+          >
+            Adicionar documento
+            <Plus color="white" size={24} />
+          </Button>
         </Flex>
 
         <Grid
