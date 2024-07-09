@@ -11,6 +11,10 @@ export const theme = extendTheme({
       baseStyle: {
         borderRadius: "2px",
       },
+      disabled: {
+        opacity: 0.5,
+        cursor: "not-allowed",
+      },
     },
   },
   colors: {
