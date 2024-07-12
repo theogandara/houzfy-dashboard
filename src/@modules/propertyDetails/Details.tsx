@@ -1,4 +1,4 @@
-import { Button, Flex, useDisclosure, useToast } from "@chakra-ui/react";
+import { Button, Flex, Image, useDisclosure, useToast } from "@chakra-ui/react";
 import { P, Subtitle, Title } from "../../components/Texts/Texts";
 import { useRedirect } from "../../hooks/useRedirect";
 import LayoutHeader from "../../layouts/LayoutHeader";
@@ -54,6 +54,7 @@ export const HouseDetails = () => {
     zipCode: "",
     price: "",
     purpose: "sale",
+    images: [],
   };
 
   const property = data?.data.property || propertyDefault;
@@ -78,6 +79,12 @@ export const HouseDetails = () => {
           <Flex flexDir="column" gap="4px">
             <Title>Detalhes do imóvel</Title>
             <Subtitle>Veja os detalhes do imóvel que você selecionou.</Subtitle>
+          </Flex>
+
+          <Flex w="full" gap="4px" overflow="auto">
+            {property.images.map((image: string | undefined) => (
+              <Image h="300px" objectFit="cover" src={image} />
+            ))}
           </Flex>
 
           <Flex

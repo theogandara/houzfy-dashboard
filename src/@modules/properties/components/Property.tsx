@@ -18,6 +18,7 @@ export const Property = (props: {
   zipCode: string;
   price: string;
   purpose: "sale" | "rent";
+  imageURL: string;
 }) => {
   const formatedValues = {
     title: serializeString(props.title, 100),
@@ -58,7 +59,7 @@ export const Property = (props: {
           objectFit="cover"
           w="full"
           h={{ mobile: "full", desktop: "180px" }}
-          src="/default/house-default.jpeg"
+          src={props.imageURL}
         />
       </Flex>
 

@@ -31,7 +31,13 @@ export const Properties = () => {
 
       <Flex mt="32px" flexDir="column" gap="24px">
         {properties?.map((property: any) => {
-          return <Property key={Math.random()} {...property} />;
+          return (
+            <Property
+              key={Math.random()}
+              {...property}
+              imageURL={property.images[0]}
+            />
+          );
         })}
       </Flex>
     </LayoutDefault>
