@@ -1,6 +1,6 @@
 ### Houzfy
 
-Bem-vindo à plataforma de dashboard inovadora Houzfy! Esta ferramenta foi desenvolvida para facilitar o gerenciamento completo de propriedades para venda e aluguel, com uma interface amigável e funcionalidades avançadas que proporcionam uma experiência eficiente e integrada para administradores e clientes.
+Bem-vindo à plataforma inovadora Houzfy! Esta ferramenta foi desenvolvida para facilitar o gerenciamento completo de propriedades para venda e aluguel, com uma interface amigável e funcionalidades avançadas que proporcionam uma experiência eficiente e integrada para administradores e clientes.
 Funcionalidades Principais
 
 1. Gerenciamento de Propriedades
