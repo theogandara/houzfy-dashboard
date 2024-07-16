@@ -1,6 +1,6 @@
-## Plataforma de Dashboard para Imobiliárias
+### Houzfy
 
-Bem-vindo à plataforma de dashboard inovadora voltada para imobiliárias! Esta ferramenta foi desenvolvida para facilitar o gerenciamento completo de propriedades para venda e aluguel, com uma interface amigável e funcionalidades avançadas que proporcionam uma experiência eficiente e integrada para administradores e clientes.
+Bem-vindo à plataforma de dashboard inovadora Houzfy! Esta ferramenta foi desenvolvida para facilitar o gerenciamento completo de propriedades para venda e aluguel, com uma interface amigável e funcionalidades avançadas que proporcionam uma experiência eficiente e integrada para administradores e clientes.
 Funcionalidades Principais
 
 1. Gerenciamento de Propriedades
@@ -25,6 +25,12 @@ Funcionalidades Principais
 
 Principais Tecnologias Utilizadas
 
-    React - Typescript - ChakraUI - Axios - Hookform - Zustand - ZOD
+    React
+    Typescript
+    ChakraUI
+    Axios
+    Hookform
+    Zustand
+    ZOD
 
-Este é um projeto proprietário e não está disponível como open source. Todo o código e documentação são de uso exclusivo dos clientes licenciados.
+Houzfy é um projeto proprietário e não está disponível como open source. Todo o código e documentação são de uso exclusivo dos clientes licenciados.
