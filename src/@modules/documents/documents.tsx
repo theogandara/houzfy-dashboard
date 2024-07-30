@@ -1,60 +1,117 @@
 import LayoutDefault from "../../layouts/LayoutDefault";
 import { Subtitle, Title } from "../../components/Texts/Texts";
-import { Button, Flex, Grid } from "@chakra-ui/react";
+import { Button, Flex, Grid, useDisclosure } from "@chakra-ui/react";
 import { FilePdf, Plus } from "@phosphor-icons/react";
-
-const documentsMock = [
-  {
-    id: "1",
-    title: "Contrato Aluguel",
-    description: "Locação de imóvel residencial",
-  },
-  {
-    id: "2",
-    title: "Contrato Venda",
-    description: "Compra e venda de imóvel residencial",
-  },
-];
+import { api } from "../../api/axiosInstance";
+import { useRef, useState } from "react";
+import { ModalAddDocument } from "./components/ModalAddDocument";
+import { useQuery } from "react-query";
+import { documentsService } from "./service/service";
 
 export const Documents = () => {
+  const {
+    isLoading,
+    error,
+    data: dataFetch,
+    refetch,
+  } = useQuery({
+    queryKey: ["documents"],
+    queryFn: () => documentsService.getDocuments(),
+    keepPreviousData: true,
+  });
+
+  const [url, setUrl] = useState("");
+  const modal = useDisclosure();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+    const file = event.target.files?.[0];
+    if (file) {
+      formData.append("file", file);
+    }
+    try {
+      const res = await api.post("/upload", formData);
+
+      setUrl(res.data.url);
+    } catch {
+      console.log("error");
+    } finally {
+      modal.onOpen();
+    }
+  };
+
+  const createDocument = async ({
+    infos,
+  }: {
+    infos: { title: string; description: string };
+  }) => {
+    try {
+      await api.post("/new-document", {
+        title: infos.title,
+        description: infos.description,
+        url,
+      });
+    } catch {
+      console.log("error");
+    } finally {
+      refetch();
+      modal.onClose();
+    }
+  };
+
   return (
-    <LayoutDefault>
-      <Flex flexDir="column" gap="16px" overflow="auto">
-        <Flex flexDir="column" gap="4px">
-          <Title>Documentos</Title>
-          <Subtitle>Your current sales summary and activity.</Subtitle>
-        </Flex>
+    <>
+      <ModalAddDocument
+        onSucess={createDocument}
+        isOpen={modal.isOpen}
+        onClose={modal.onClose}
+      />
+      <LayoutDefault>
+        <Flex flexDir="column" gap="16px" overflow="auto">
+          <Flex flexDir="column" gap="4px">
+            <Title>Documentos</Title>
+            <Subtitle>Your current sales summary and activity.</Subtitle>
+          </Flex>
 
-        <Flex align="center" w="full">
-          <Button
-            w={{ mobile: "100%", tablet: "230px" }}
-            gap="8px"
-            colorScheme="blue"
-          >
-            Adicionar documento
-            <Plus color="white" size={24} />
-          </Button>
-        </Flex>
-
-        <Grid
-          templateColumns={{
-            mobile: "repeat(1, 1fr)",
-            tablet: "repeat(2, 1fr)",
-            desktop: "repeat(3, 1fr)",
-          }}
-          gap="16px"
-        >
-          {documentsMock.map((document) => (
-            <DocumentCard
-              id={document.id}
-              title={document.title}
-              description={document.description}
-              key={document.id}
+          <Flex align="center" w="full">
+            <input
+              type="file"
+              accept="application/pdf"
+              hidden
+              ref={inputRef}
+              onChange={handleChange}
             />
-          ))}
-        </Grid>
-      </Flex>
-    </LayoutDefault>
+            <Button
+              w={{ mobile: "100%", tablet: "230px" }}
+              gap="8px"
+              colorScheme="blue"
+              onClick={() => inputRef.current?.click()}
+            >
+              Adicionar documento
+              <Plus color="white" size={24} />
+            </Button>
+          </Flex>
+
+          <Grid
+            templateColumns={{
+              mobile: "repeat(1, 1fr)",
+              tablet: "repeat(2, 1fr)",
+            }}
+            gap="16px"
+          >
+            {dataFetch?.data.map((document: any) => (
+              <DocumentCard
+                url={document.url}
+                id={document.id}
+                title={document.title}
+                description={document.description}
+                key={document.description}
+              />
+            ))}
+          </Grid>
+        </Flex>
+      </LayoutDefault>
+    </>
   );
 };
 
@@ -62,10 +119,12 @@ const DocumentCard = ({
   id,
   title,
   description,
+  url,
 }: {
   id: string;
   title: string;
   description: string;
+  url: string;
 }) => {
   return (
     <Flex
@@ -75,6 +134,9 @@ const DocumentCard = ({
       flexDir="column"
       gap="8px"
       cursor="pointer"
+      onClick={() => {
+        window.open(url, "_blank");
+      }}
     >
       <Flex
         flexDir="column"
