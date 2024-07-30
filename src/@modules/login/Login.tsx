@@ -13,6 +13,7 @@ import * as z from "zod";
 import { useRedirect } from "../../hooks/useRedirect";
 import { api } from "../../api/axiosInstance";
 import { useLoadingStore } from "../../store/loading.store";
+import { useEffect } from "react";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -64,6 +65,10 @@ export const Login = () => {
       setShow(false);
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem("jwt");
+  }, []);
 
   return (
     <LayoutForm>
