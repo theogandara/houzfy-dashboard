@@ -2,6 +2,7 @@ import { ErrorMessage, Label, Subtitle } from "../../../components/Texts/Texts";
 import {
   Button,
   Flex,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -11,8 +12,10 @@ import {
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "@phosphor-icons/react";
+import { ArrowRight, UploadSimple } from "@phosphor-icons/react";
 import { useNewPropertyStore } from "../store/NewPropertyStore";
+import { useRef, useState } from "react";
+import { api } from "../../../api/axiosInstance";
 
 const schema = z.object({
   title: z
@@ -32,7 +35,12 @@ const schema = z.object({
 });
 
 export const BasicInfos = () => {
-  const { setStep, setBasicInfos, basicInfos } = useNewPropertyStore();
+  const {
+    setStep,
+    setBasicInfos,
+    basicInfos,
+    setImages: setImagesStore,
+  } = useNewPropertyStore();
   const {
     register,
     handleSubmit,
@@ -62,7 +70,25 @@ export const BasicInfos = () => {
   const price = watch("price") || "";
   const formattedPrice = CurrencyFormat(price);
 
+  const [images, setImages] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+    const file = event.target.files?.[0];
+    if (file) {
+      formData.append("file", file);
+    }
+    try {
+      const res = await api.post("/upload", formData);
+      setImages((state) => [...state, res.data.url]);
+    } catch {
+    } finally {
+    }
+  };
+
   const onSubmit = (data: any) => {
+    setImagesStore(images);
     setBasicInfos({
       title: data.title,
       price: data.price,
@@ -147,6 +173,37 @@ export const BasicInfos = () => {
           <ErrorMessage>
             {errors.category?.message && <>{errors.category?.message}</>}
           </ErrorMessage>
+        </Flex>
+      </Flex>
+
+      <Flex flexDir="column" gap="24px" mt="12px">
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          ref={inputRef}
+          onChange={handleChange}
+        />
+        <Button
+          gap="24px"
+          w={{ mobile: "full", tablet: "calc(50% - 8px)" }}
+          onClick={() => inputRef.current?.click()}
+        >
+          <UploadSimple color="black" size={24} />
+          Adicionar Fotos
+        </Button>
+
+        <Flex>
+          {images.map((image, index) => {
+            return (
+              <Image
+                key={index}
+                src={image}
+                alt="Imagem do imóvel"
+                style={{ width: 100, height: 100, objectFit: "cover" }}
+              />
+            );
+          })}
         </Flex>
       </Flex>
 

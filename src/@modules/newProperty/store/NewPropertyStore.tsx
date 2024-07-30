@@ -42,6 +42,8 @@ interface Store {
   setLocationInfos: (values: Values["locationInfos"]) => void;
   detailInfos: Values["detailInfos"];
   setDetailInfos: (values: Values["detailInfos"]) => void;
+  images: string[];
+  setImages: (images: string[]) => void;
   clear: () => void;
 }
 
@@ -81,8 +83,11 @@ export const useNewPropertyStore = create<Store>()((set) => ({
     furnished: false,
   },
   setDetailInfos: (values) => set({ detailInfos: values }),
+  images: [],
+  setImages: (images) => set({ images }),
   clear: () =>
     set({
+      images: [],
       step: 0,
       basicInfos: {
         title: "",

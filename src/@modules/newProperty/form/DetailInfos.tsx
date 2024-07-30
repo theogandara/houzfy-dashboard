@@ -34,6 +34,7 @@ export const DetailInfos = () => {
     locationInfos,
     detailInfos,
     clear,
+    images,
   } = useNewPropertyStore();
   const {
     register,
@@ -106,6 +107,7 @@ export const DetailInfos = () => {
         ...basicInfos,
         ...locationInfos,
         ...{
+          images: images,
           totalArea: data.totalArea || 0,
           builtArea: data.builtArea || 0,
           bedrooms: data.bedrooms || 0,
