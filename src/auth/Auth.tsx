@@ -1,9 +1,10 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useRedirect } from "../hooks/useRedirect";
 
 export const Auth = ({ children }: { children: ReactNode }) => {
   const { navigateTo } = useRedirect();
+  const [loading, setLoading] = useState(true);
 
   const validateToken = () => {
     try {
@@ -21,12 +22,18 @@ export const Auth = ({ children }: { children: ReactNode }) => {
     } catch (e) {
       localStorage.removeItem("jwt");
       navigateTo("/entrar");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     validateToken();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return <>{children}</>;
 };
