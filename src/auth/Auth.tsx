@@ -8,6 +8,9 @@ export const Auth = ({ children }: { children: ReactNode }) => {
   const validateToken = () => {
     try {
       const token = localStorage.getItem("jwt");
+      if (!token) {
+        throw new Error("Token not found");
+      }
       if (token) {
         const decodedToken = jwtDecode(token);
         const tokenIsValid = (decodedToken.exp as any) * 1000 > Date.now();
